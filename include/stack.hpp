@@ -11,6 +11,7 @@ public:
 	size_t count() const;
 	void print()const;
 	void push(T const &);
+	void swap()
 	T pop();
 	~stack();
 private:
@@ -38,7 +39,6 @@ stack<T>::stack(const stack<T>& copy)
 	count_ = copy.count_;
 	array_ = new T*[array_size_];
 	for (int i = 0; i < array_size_; i++)
-	//std::copy(int i = 0; i < array_size_;i++)
 		array_[array_size_] = copy.array_[array_size_];
 }
 
@@ -46,6 +46,13 @@ template<class T>
 size_t stack<T>::count() const
 {
 	return count_;
+}
+
+template<typename T> 
+void stack<T>::swap() {
+	T * temp = new T[array_size_]();
+	std::copy(array_, array_ + count_, stdext::checked_array_iterator<T*>(temp, array_size_));
+	array_ = temp;
 }
 
 template <typename T>
@@ -59,12 +66,13 @@ void stack<T>::push(T const &value)
 	else if (array_size_ == count_)
 	{
 		array_size_ = array_size_ * 2;
-		T *s1 = new T[array_size_];
-		for (int i = 0; i < count_; i++)
+		swap();
+		//T *s1 = new T[array_size_];
+		//for (int i = 0; i < count_; i++)
 		//std::copy(int i = 0; i < count; i++)
-			s1[i] = array_[i];
-		delete[] array_;
-		array_ = s1;
+		//	s1[i] = array_[i];
+		//delete[] array_;
+		//array_ = s1;
 	}
 	array_[count_] = value;
 	count_++;
@@ -74,9 +82,10 @@ template <typename T>
 T stack<T>::pop()
 {
 	if (count_ == 0) 
-		throw "logic_error" ;
+		throw "Stack is empty" ;
 	count_--;
 	T x = array_[count_];
+	swap();
 	return x;
 }
 
@@ -84,6 +93,5 @@ template <typename T>
 void stack<T>::print() const
 {
 	for (int i = 0; i < array_size_; i++)
-	//std::copy(int i = 0; i < array_size_; i++)
 		cout << array_[i];
 }
