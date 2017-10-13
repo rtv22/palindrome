@@ -11,7 +11,7 @@ SCENARIO("Push", "[push]") {
 	stack<int> A;
 	A.push(1);
 	A.push(2);
-	REQUIRE(REQUIRE(count_() == 2));
+	REQUIRE(REQUIRE(A.count_() == 2));
 }
 
 SCENARIO("Pop", "[pop]") {
@@ -19,5 +19,14 @@ SCENARIO("Pop", "[pop]") {
 	A.push(1);
 	A.push(2);
 	A.pop();
-	REQUIRE(count_() == 1));
+	REQUIRE(A.count_() == 1));
+}
+
+SCENARIO("oper=", "[oper=]"){
+	stack<int> A;
+	A.push(1);
+	A.push(2);
+	stack<int> B;
+	B = A;
+	REQUIRE(B.count_() == 2));
 }
